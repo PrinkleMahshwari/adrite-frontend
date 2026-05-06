@@ -1,4 +1,9 @@
+// yahan sirf routing call ho rahi hai
+
+import AppRoutes from "./routes/AppRoutes";
+
 function App() {
-    return <h1>Adrite Frontend</h1>;
+  return <AppRoutes />;
 }
+
 export default App;
