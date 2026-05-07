@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  color: #111827;
+}
+
+.container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.section-padding {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+.heading-primary {
+  font-family: 'Poppins', sans-serif;
+  font-size: 52px;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.heading-secondary {
+  font-family: 'Poppins', sans-serif;
+  font-size: 42px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.paragraph {
+  color: #64748B;
+  line-height: 1.8;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #22C7C7 0%, #169E9E 100%);
+}
