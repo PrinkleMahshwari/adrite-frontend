@@ -1,46 +1,82 @@
-// routing ka main control yahan hoga
-// public + protected + role-based routes
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "../pages/public/Login";
+
+import Unauthorized from "../pages/unauthorized/Unauthorized";
+
 import PrivateRoute from "./PrivateRoute";
 
-// pages
-import Login from "../pages/public/Login";
-import ClientDashboard from "../pages/client/Dashboard";
-import AdminDashboard from "../pages/admin/Dashboard";
+// temporary dashboard pages
+// later actual pages replace karenge
+
+function ClientDashboard() {
+
+  return <h1>Client Dashboard</h1>;
+}
+
+function AdminDashboard() {
+
+  return <h1>Admin Dashboard</h1>;
+}
 
 function AppRoutes() {
+
   return (
+
     <BrowserRouter>
+
       <Routes>
 
-        {/* public route */}
-        <Route path="/login" element={<Login />} />
+        {/* default route */}
 
-        {/* client dashboard */}
+        <Route
+          path="/"
+          element={<Navigate to="/login" />}
+        />
+
+        {/* public route */}
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        {/* client protected route */}
+
         <Route
           path="/client"
           element={
-            <PrivateRoute role="client">
+            <PrivateRoute allowedRole="client">
               <ClientDashboard />
             </PrivateRoute>
           }
         />
 
-        {/* admin dashboard */}
+        {/* admin protected route */}
+
         <Route
           path="/admin"
           element={
-            <PrivateRoute role="admin">
+            <PrivateRoute allowedRole="admin">
               <AdminDashboard />
             </PrivateRoute>
           }
         />
 
-        {/* default route (agar kuch bhi match na ho) */}
-        <Route path="*" element={<Login />} />
+        {/* unauthorized page */}
+
+        <Route
+          path="/unauthorized"
+          element={<Unauthorized />}
+        />
 
       </Routes>
+
     </BrowserRouter>
   );
 }
