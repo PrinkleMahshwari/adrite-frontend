@@ -7,12 +7,14 @@ import {
 
 import Login from "../pages/public/Login";
 
+import Register from "../pages/public/Register";
+
 import Unauthorized from "../pages/unauthorized/Unauthorized";
 
 import PrivateRoute from "./PrivateRoute";
 
-// temporary dashboard pages
-// later actual pages replace karenge
+// temporary dashboards
+// later actual dashboards replace honge
 
 function ClientDashboard() {
 
@@ -39,36 +41,45 @@ function AppRoutes() {
           element={<Navigate to="/login" />}
         />
 
-        {/* public route */}
+        {/* public routes */}
 
         <Route
           path="/login"
           element={<Login />}
         />
 
-        {/* client protected route */}
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+
+        {/* client route */}
 
         <Route
           path="/client"
           element={
             <PrivateRoute allowedRole="client">
+
               <ClientDashboard />
+
             </PrivateRoute>
           }
         />
 
-        {/* admin protected route */}
+        {/* admin route */}
 
         <Route
           path="/admin"
           element={
             <PrivateRoute allowedRole="admin">
+
               <AdminDashboard />
+
             </PrivateRoute>
           }
         />
 
-        {/* unauthorized page */}
+        {/* unauthorized */}
 
         <Route
           path="/unauthorized"

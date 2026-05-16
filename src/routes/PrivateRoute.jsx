@@ -4,22 +4,19 @@ import { Navigate } from "react-router-dom";
 // token + role dono check ho rahe hain
 
 function PrivateRoute({ children, allowedRole }) {
-
   const token = localStorage.getItem("access_token");
 
   const role = localStorage.getItem("role");
 
-  // agar token nahi hai
+  // agar token nahi hai to login pe bhej do
 
   if (!token) {
-
     return <Navigate to="/login" />;
   }
 
-  // agar role match nahi kar raha
+  // agar role match nahi kar raha to unauthorized page pe bhej do
 
   if (allowedRole && role !== allowedRole) {
-
     return <Navigate to="/unauthorized" />;
   }
 

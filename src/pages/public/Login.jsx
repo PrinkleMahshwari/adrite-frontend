@@ -1,5 +1,17 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
+
+import Navbar from "../../components/common/Navbar";
+
+import Footer from "../../components/common/Footer";
+
+import InputField from "../../components/common/InputField";
+
+import PasswordInput from "../../components/common/PasswordInput";
 
 import { loginUser } from "../../services/authService";
 
@@ -11,27 +23,26 @@ import {
 } from "../../utils/validators/authValidator";
 
 // login page
-// backend auth API yahan connect ki hai
-// proper validation + loading + role based navigation handle ho raha hai
+// backend login API + validation + role navigation
 
 function Login() {
 
   const navigate = useNavigate();
 
   // form state
-  // controlled inputs use kar rahe hain
 
   const [formData, setFormData] = useState({
+
     email: "",
+
     password: "",
   });
 
-  // validation + API error state
+  // error state
 
   const [error, setError] = useState("");
 
   // loading state
-  // request ke time button disable rahega
 
   const [loading, setLoading] = useState(false);
 
@@ -53,8 +64,6 @@ function Login() {
 
     e.preventDefault();
 
-    // purani error clear
-
     setError("");
 
     // email validation
@@ -67,20 +76,17 @@ function Login() {
     }
 
     // password validation
-    // backend password rules follow kar rahe hain
 
     if (!validatePassword(formData.password)) {
 
       setError(
-        "Password strong hona chahiye (uppercase, lowercase, number, special char)"
+        "Password strong hona chahiye"
       );
 
       return;
     }
 
     try {
-
-      // loading start
 
       setLoading(true);
 
@@ -105,13 +111,11 @@ function Login() {
       if (role === "admin") {
 
         navigate("/admin");
-
       }
 
       else if (role === "client") {
 
         navigate("/client");
-
       }
 
       else {
@@ -123,19 +127,15 @@ function Login() {
 
     catch (err) {
 
-      // backend error handling
-
       setError(
 
         err?.response?.data?.message ||
 
-        "Invalid email or wrong password"
+        "Invalid email or password"
       );
     }
 
     finally {
-
-      // loading stop
 
       setLoading(false);
     }
@@ -143,79 +143,123 @@ function Login() {
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center bg-light px-4">
+    <>
 
-      <div className="bg-white shadow-custom rounded-custom p-10 w-full max-w-md">
+      <div className="gradient-bg min-h-screen">
 
-        {/* page heading */}
+        <Navbar />
 
-        <h1 className="text-3xl font-bold mb-8 text-center">
-          Login
-        </h1>
+        <div className="flex items-center justify-center min-h-screen px-4 pt-24">
 
-        {/* error message */}
+          <div className="bg-white shadow-custom rounded-custom p-10 w-full max-w-md">
 
-        {error && (
+            {/* page heading */}
 
-          <p className="text-red-500 text-center mb-4">
-            {error}
-          </p>
-        )}
+            <h1 className="text-3xl font-bold text-center mb-8">
+              Login
+            </h1>
 
-        {/* login form */}
+            {/* error message */}
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-5"
-        >
+            {error && (
 
-          {/* email input */}
+              <p className="text-red-500 text-center mb-4">
+                {error}
+              </p>
+            )}
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter Email"
-            autoComplete="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border border-borderColor p-3 rounded-lg outline-none focus:border-primary"
-          />
+            {/* login form */}
 
-          {/* password input */}
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter Password"
-            autoComplete="current-password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full border border-borderColor p-3 rounded-lg outline-none focus:border-primary"
-          />
+              <InputField
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                autoComplete="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
 
-          {/* submit button */}
+              <PasswordInput
+                name="password"
+                placeholder="Enter Password"
+                autoComplete="current-password"
+                value={formData.password}
+                onChange={handleChange}
+              />
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full bg-primary text-white py-3 rounded-lg transition-all duration-300 ${
-              loading
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:opacity-90"
-            }`}
-          >
+              {/* forgot password placeholder */}
 
-            {loading
-              ? "Logging in..."
-              : "Login"}
+              <div className="text-right">
 
-          </button>
+                <button
+                  type="button"
+                  className="text-primary text-sm hover:underline"
+                >
+                  Forgot Password?
+                </button>
 
-        </form>
+              </div>
+
+              {/* submit button */}
+
+              <button
+                type="submit"
+
+                disabled={loading}
+
+                className={`
+                  w-full
+                  bg-primary
+                  text-white
+                  py-3
+                  rounded-lg
+                  transition-all
+                  duration-300
+                  ${
+                    loading
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:opacity-90"
+                  }
+                `}
+              >
+
+                {loading
+                  ? "Logging in..."
+                  : "Login"}
+
+              </button>
+
+            </form>
+
+            {/* register redirect */}
+
+            <p className="text-center mt-6 text-grayText">
+
+              Don't have an account?{" "}
+
+              <Link
+                to="/register"
+                className="text-primary font-semibold hover:underline"
+              >
+                Register
+              </Link>
+
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
-    </div>
+      <Footer />
+
+    </>
   );
 }
 

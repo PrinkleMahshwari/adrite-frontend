@@ -1,9 +1,9 @@
 import AppRoutes from "./routes/AppRoutes";
 
-// app ka main entry point
+// main app component
+// routing ka control AppRoutes me hai
 
 function App() {
-
   return <AppRoutes />;
 }
 
